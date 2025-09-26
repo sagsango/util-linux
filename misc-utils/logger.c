@@ -1,4 +1,11 @@
 /*
+ *
+ *
+ * XXX:
+ *  logger, just tries to send stdin msg to named socket /dev/log
+ */
+
+/*
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -100,6 +107,11 @@ main(argc, argv)
 	argc -= optind;
 	argv += optind;
 
+    /* XXX:
+     *      This comes from musl/glibc
+     *      connets to the named-socket
+     *      /dev/log
+     */
 	/* setup for logging */
 	openlog(tag ? tag : getlogin(), logflags, 0);
 	(void) fclose(stdout);
