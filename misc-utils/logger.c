@@ -1,4 +1,19 @@
 /*
+XXX: read with the musl code 
+~ ¿¿¿ ls /dev/log
+/dev/log
+~ ¿¿¿ ls /dev/kmsg
+/dev/kmsg
+~ ¿¿¿ file /dev/log
+/dev/log: symbolic link to /run/systemd/journal/dev-log
+~ ¿¿¿ file /run/systemd/journal/dev-log
+/run/systemd/journal/dev-log: socket
+~ ¿¿¿ file /dev/kmsg
+/dev/kmsg: character special (1/11)
+~ ¿¿¿
+*/
+
+/*
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -168,8 +183,12 @@ main(int argc, char **argv) {
 
 	/* setup for logging */
 	if (!usock)
+        /* XXX: Opens the standard socket file /dev/log
+         *      and logs there (openlog comes from musl std library)
+         */
 		openlog(tag ? tag : getlogin(), logflags, 0);
 	else
+        /* XXX: we can have journald with non standard unix socket name */
 		LogSock = myopenlog(usock);
 
 	(void) fclose(stdout);
