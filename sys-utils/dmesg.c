@@ -12,10 +12,42 @@
  */
 
 /*
+XXX: read with the musl code
+~ ¿¿¿ ls /dev/log
+/dev/log
+~ ¿¿¿ ls /dev/kmsg
+/dev/kmsg
+~ ¿¿¿ file /dev/log
+/dev/log: symbolic link to /run/systemd/journal/dev-log
+~ ¿¿¿ file /run/systemd/journal/dev-log
+/run/systemd/journal/dev-log: socket
+~ ¿¿¿ file /dev/kmsg
+/dev/kmsg: character special (1/11)
+~ ¿¿¿
+*/
+
+
+
+
+/* XXX: rsyslog system call commands
+ *      https://man7.org/linux/man-pages/man2/syslog.2.html
+ *
+ *      why cant they just use ioctl?
+ *          because its a general module
+ *          used by eveyone, so it has 
+ *          its own system call.
+ *
+ *
+ *      although we can do some limited 
+ *      openration on the /dev/kmsg:
+ *          fd = open("/dev/kmsg", O_RDONLY);
+ *          read(fd, &buf, N);
+ */
+/*
  * Commands to sys_syslog:
  *
- *      0 -- Close the log.  Currently a NOP.
- *      1 -- Open the log. Currently a NOP.
+ *      0 -- Close the log.  Currently a NOP.(NOT USED and REQUIRED)
+ *      1 -- Open the log. Currently a NOP.(NOT USED and REQUIRED)
  *      2 -- Read from the log.
  *      3 -- Read all messages remaining in the ring buffer.
  *      4 -- Read and clear all messages remaining in the ring buffer
@@ -25,6 +57,8 @@
  *      8 -- Set level of messages printed to console
  *      9 -- Return number of unread characters in the log buffer
  *           [supported since 2.4.10]
+ *      10 - SYSLOG_ACTION_SIZE_BUFFER, total size of the kernel log
+              buffer.
  *
  * Only function 3 is allowed to non-root processes.
  */
