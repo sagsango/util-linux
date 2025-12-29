@@ -330,6 +330,11 @@ static inline void
 cpuid(unsigned int op, unsigned int *eax, unsigned int *ebx,
 			 unsigned int *ecx, unsigned int *edx)
 {
+    /* XXX: we are just reading the sys folder for all the info
+     *      only here we do cpuid asm instruction
+     *
+     *      to get the hypervisor vendor id
+     */
 	__asm__("cpuid"
 		: "=a" (*eax),
 		  "=b" (*ebx),
