@@ -3,6 +3,16 @@
  *
  * XXX:
  *  logger, just tries to send stdin msg to named socket /dev/log
+ 
+ ~ ❱❱❱ file /dev/kmsg
+/dev/kmsg: character special (1/11)
+# 1 = major, 11 = minor
+~ ❱❱❱ file /dev/log
+/dev/log: symbolic link to /run/systemd/journal/dev-log
+~ ❱❱❱ file /run/systemd/journal/dev-log
+/run/systemd/journal/dev-log: socket
+~ ❱❱❱
+
  */
 
 /*
